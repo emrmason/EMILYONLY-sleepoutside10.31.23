@@ -2,17 +2,21 @@ import { findProductById } from "./productData.mjs";
 import { getParam } from "./utils.mjs";
 export { productDetails };
 
-export default async function productDetails(productId, selector) {
+const product = getParam("product");
+productDetails(product);
+
+export default async function productDetails() {
     // use findProductById to get the details for the current product. findProductById will return a promise! use await or .then() to process it
-    let product = await findProductById(productId).then(getParam(product.id)); 
+    let product = await findProductById(product.Id);// .then(getParam(product.id)) - this errors out- cannot access "product" before initialization
+    //console.log(product[0]); RETURNS "undefined"
     // console.log(product); // this logs the entire object
-    //renderProductDetails(product.id);// HERE!!
+    console.log(renderProductDetails(product.Id));
     // once we have the product details we can render out the HTML
     // add a listener to Add to Cart button
-   addToCartHandler(product);
+   addToCartHandler();
   }
 
-function addProductToCart(product) {
+function addToCart(product) {
   if(!getLocalStorage("so-cart")) {
     setLocalStorage("so-cart", []);
   }
@@ -23,10 +27,10 @@ function addProductToCart(product) {
 // add to cart button event handler
 async function addToCartHandler(e) {
   const product = await findProductById(e.target.dataset.id);
-  addProductToCart(product);
+  addToCart(product);
 }
 
-function renderProductDetails() {
+function renderProductDetails(product) {
   document.getElementById("productName").innerText = product.Name;
   document.getElementById("productNameWithoutBrand").innerText = product.NameWithoutBrand;
   document.getElementById("productImage").src = product.Images.PrimaryLarge;

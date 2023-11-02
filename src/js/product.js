@@ -3,9 +3,10 @@ import { findProductById } from "./productData.mjs";
 import { productDetails } from "./productDetails.mjs";
 
 
-function addProductToCart(product) {
-  setLocalStorage("so-cart", product);
-}
+
+// function addProductToCart(product) {
+//   setLocalStorage("so-cart", product);
+// }
 // add to cart button event handler
 async function addToCartHandler(e) {
   const product = await findProductById(e.target.dataset.id);
@@ -17,6 +18,6 @@ document
   .getElementById("addToCart")
   .addEventListener("click", addToCartHandler);
 
-const productId = getParam("product");
-productDetails(productId);
+// const productId = getParam("product");
+// productDetails(productId);
 // console.log(findProductById(productId));
